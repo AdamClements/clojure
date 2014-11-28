@@ -1536,12 +1536,8 @@
   Will release the monitor of x in all circumstances."
   {:added "1.0"}
   [x & body]
-  `(let [lockee# ~x]
-     (try
-      (monitor-enter lockee#)
-      ~@body
-      (finally
-       (monitor-exit lockee#)))))
+  `(let [lockee# ~x]     
+     (. clojure.lang.Synchronized lock lockee# (fn [] ~@body))))
 
 (defmacro ..
   "form => fieldName-symbol or (instanceMethodName-symbol args*)
