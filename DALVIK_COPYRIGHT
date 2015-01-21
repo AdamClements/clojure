@@ -1,104 +1,14 @@
- *   Clojure
- *   Copyright (c) Rich Hickey. All rights reserved.
- *   The use and distribution terms for this software are covered by the
- *   Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
- *   which can be found in the file epl-v10.html at the root of this distribution.
- *   By using this software in any fashion, you are agreeing to be bound by
- * 	 the terms of this license.
- *   You must not remove this notice, or any other, from this software.
 
-This is a fork of https://github.com/clojure/clojure with dynamic
-compilation support on Android platform. This repository also includes
-com.android.dx package from
-https://android.googlesource.com/platform/dalvik/ repository, which is
-licensed under the Apache License, Version 2.0. The full copyright
-notice is here:
-https://github.com/clojure-android/clojure/blob/android/DALVIK_COPYRIGHT
-Current state of com.android.dx package is based on commit cbac7ae in
-platform/dalvik. For details see local commit
-6d4c8710be596f7fb479e801e445217adaeee012
+   Copyright (c) 2005-2008, The Android Open Source Project
 
-This adds the extra install step to download the dx dependencies:
-    git submodule --init --recursive
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
 
-Docs: http://clojure.org
-Feedback: http://groups.google.com/group/clojure
-Getting Started: http://dev.clojure.org/display/doc/Getting+Started
-
-To run:  java -cp clojure-${VERSION}.jar clojure.main
-
-To build locally with Ant:  
-
-   One-time setup:    ./antsetup.sh
-   To build:          ant
-
-Maven 2 build instructions:
-
-  To build:  mvn package 
-  The built JARs will be in target/
-
-  To build without testing:  mvn package -Dmaven.test.skip=true
-
-  To build and install in local Maven repository:  mvn install
-
-  To build a ZIP distribution:  mvn package -Pdistribution
-  The built .zip will be in target/
-
-
---------------------------------------------------------------------------
-This program uses the ASM bytecode engineering library which is distributed
-with the following notice:
-
-Copyright (c) 2000-2005 INRIA, France Telecom
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions
-are met:
-
-1. Redistributions of source code must retain the above copyright
-   notice, this list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright
-   notice, this list of conditions and the following disclaimer in the
-   documentation and/or other materials provided with the distribution.
-
-3. Neither the name of the copyright holders nor the names of its
-   contributors may be used to endorse or promote products derived from
-   this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
-THE POSSIBILITY OF SUCH DAMAGE.
-
-
---------------------------------------------------------------------------
-This program uses source code from the Dalvik eXchange from the Android Open
-Source Project which is distributed under the following terms:
-
-Copyright (c) 2005-2008, The Android Open Source Project
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-
--------------------------------------------------------------------------
-This program uses the Guava Murmur3 hash implementation which is distributed
-under the Apache License:
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
 
 
                                  Apache License
@@ -277,3 +187,4 @@ under the Apache License:
       of your accepting any such warranty or additional liability.
 
    END OF TERMS AND CONDITIONS
+

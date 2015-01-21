@@ -21,7 +21,7 @@ import java.net.URL;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 
-public class DynamicClassLoader extends URLClassLoader{
+public class DynamicClassLoader extends URLClassLoader {
 HashMap<Integer, Object[]> constantVals = new HashMap<Integer, Object[]>();
 static ConcurrentHashMap<String, Reference<Class>>classCache =
         new ConcurrentHashMap<String, Reference<Class> >();
@@ -41,9 +41,18 @@ public DynamicClassLoader(ClassLoader parent){
 	super(EMPTY_URLS,parent);
 }
 
+public Class definePlatformSpecificClass(final String name, final byte[] bytes, final Object srcForm) {
+    if (RT.VM_TYPE.deref()==RT.DALVIK_VM) {
+        return DalvikDynamicClassLoader.defineMissingClass(this, name, bytes, srcForm);
+    }
+    else {
+        return defineClass(name,bytes,0,bytes.length);
+    }
+}
+
 public Class defineClass(String name, byte[] bytes, Object srcForm){
 	Util.clearCache(rq, classCache);
-	Class c = defineClass(name, bytes, 0, bytes.length);
+	Class c = definePlatformSpecificClass(name, bytes, srcForm);
     classCache.put(name, new SoftReference(c,rq));
     return c;
 }

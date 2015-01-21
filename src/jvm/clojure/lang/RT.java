@@ -20,6 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.*;
 import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.AccessController;
@@ -197,6 +198,11 @@ final static public Var DEFAULT_DATA_READERS = Var.intern(CLOJURE_NS, Symbol.int
 final static public Var SUPPRESS_READ = Var.intern(CLOJURE_NS, Symbol.intern("*suppress-read*"), null).setDynamic();
 final static public Var ASSERT = Var.intern(CLOJURE_NS, Symbol.intern("*assert*"), T).setDynamic();
 final static public Var MATH_CONTEXT = Var.intern(CLOJURE_NS, Symbol.intern("*math-context*"), null).setDynamic();
+static Keyword DALVIK_VM = Keyword.intern(null, "dalvik-vm");
+static Keyword JAVA_VM = Keyword.intern(null, "java-vm");
+final static public Var VM_TYPE =
+        Var.intern(CLOJURE_NS, Symbol.create("vm-type"),
+                   (System.getProperty("java.vm.name").equals("Dalvik")) ? DALVIK_VM : JAVA_VM);
 static Keyword LINE_KEY = Keyword.intern(null, "line");
 static Keyword COLUMN_KEY = Keyword.intern(null, "column");
 static Keyword FILE_KEY = Keyword.intern(null, "file");
@@ -233,6 +239,8 @@ final static Var FN_LOADER_VAR = Var.intern(CLOJURE_NS, Symbol.intern("*fn-loade
 static final Var PRINT_INITIALIZED = Var.intern(CLOJURE_NS, Symbol.intern("print-initialized"));
 static final Var PR_ON = Var.intern(CLOJURE_NS, Symbol.intern("pr-on"));
 //final static Var IMPORTS = Var.intern(CLOJURE_NS, Symbol.intern("*imports*"), DEFAULT_IMPORTS);
+
+
 final static IFn inNamespace = new AFn(){
 	public Object invoke(Object arg1) {
 		Symbol nsname = (Symbol) arg1;
@@ -467,22 +475,24 @@ static public void load(String scriptbase, boolean failIfNotFound) throws IOExce
 static void doInit() throws ClassNotFoundException, IOException{
 	load("clojure/core");
 
-	Var.pushThreadBindings(
-			RT.mapUniqueKeys(CURRENT_NS, CURRENT_NS.deref(),
-			       WARN_ON_REFLECTION, WARN_ON_REFLECTION.deref()
-					,RT.UNCHECKED_MATH, RT.UNCHECKED_MATH.deref()));
-	try {
-		Symbol USER = Symbol.intern("user");
-		Symbol CLOJURE = Symbol.intern("clojure.core");
-
-		Var in_ns = var("clojure.core", "in-ns");
-		Var refer = var("clojure.core", "refer");
-		in_ns.invoke(USER);
-		refer.invoke(CLOJURE);
-		maybeLoadResourceScript("user.clj");
-	}
-	finally {
-		Var.popThreadBindings();
+	if(VM_TYPE.deref() == JAVA_VM) {
+		Var.pushThreadBindings(
+				RT.mapUniqueKeys(CURRENT_NS, CURRENT_NS.deref(),
+				       WARN_ON_REFLECTION, WARN_ON_REFLECTION.deref()
+						,RT.UNCHECKED_MATH, RT.UNCHECKED_MATH.deref()));
+		try {
+			Symbol USER = Symbol.intern("user");
+			Symbol CLOJURE = Symbol.intern("clojure.core");
+	
+			Var in_ns = var("clojure.core", "in-ns");
+			Var refer = var("clojure.core", "refer");
+			in_ns.invoke(USER);
+			refer.invoke(CLOJURE);
+			maybeLoadResourceScript("user.clj");
+		}
+		finally {
+			Var.popThreadBindings();
+		}
 	}
 }
 
@@ -2115,7 +2125,6 @@ static public Object[] setValues(Object... vals){
 		return vals;//[0];
 	return null;
 }
-
 
 static public ClassLoader makeClassLoader(){
 	return (ClassLoader) AccessController.doPrivileged(new PrivilegedAction(){

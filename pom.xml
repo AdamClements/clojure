@@ -69,6 +69,12 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>com.google.android</groupId>
+      <artifactId>android</artifactId>
+      <version>4.0.1.2</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -139,6 +145,8 @@
             <configuration>
               <sources>
 		<source>src/jvm</source>
+		<source>android/platform/dalvik/dx/src</source>
+		<source>android/platform/libcore/dex/src/main/java</source>
               </sources>
             </configuration>
           </execution>
