@@ -419,17 +419,17 @@ static void compile(String cljfile) throws IOException{
 static int loadIndent = 0;
 
 static public void load(String scriptbase) throws IOException, ClassNotFoundException{
-//	long start = System.nanoTime();
-//	for(int i = 0;i<loadIndent;i++)
-//		System.out.print(' ');
-//	System.out.println("loading: " + scriptbase);
-//	++loadIndent;
+	long start = System.nanoTime();
+	for(int i = 0;i<loadIndent;i++)
+		System.out.print(' ');
+	System.out.println("loading: " + scriptbase);
+	++loadIndent;
 	load(scriptbase, true);
-//	--loadIndent;
-//	long ns = System.nanoTime() - start;
-//	for(int i = 0;i<loadIndent;i++)
-//		System.out.print(' ');
-//	System.out.println("loaded: " + scriptbase + ", in: " + ns/1000000 + "ms");
+	--loadIndent;
+	long ns = System.nanoTime() - start;
+	for(int i = 0;i<loadIndent;i++)
+		System.out.print(' ');
+	System.out.println("loaded: " + scriptbase + ", in: " + ns/1000000 + "ms");
 }
 
 static public void load(String scriptbase, boolean failIfNotFound) throws IOException, ClassNotFoundException{
@@ -454,8 +454,8 @@ static public void load(String scriptbase, boolean failIfNotFound) throws IOExce
 					       WARN_ON_REFLECTION, WARN_ON_REFLECTION.deref()
 							,RT.UNCHECKED_MATH, RT.UNCHECKED_MATH.deref()));
 			loaded = (loadClassForName(scriptbase.replace('/', '.') + LOADER_SUFFIX) != null);
-//			if(loaded)
-//				System.out.println("Loaded CLASS:" + scriptbase);
+			if(loaded)
+				System.out.println("Loaded CLASS:" + scriptbase);
 		}
 		finally {
 			Var.popThreadBindings();
