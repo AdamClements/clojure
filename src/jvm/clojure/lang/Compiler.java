@@ -1044,7 +1044,7 @@ static public abstract class HostExpr implements Expr, MaybePrimitiveExpr{
 					{
 					if(m != null && m.containsKey(form))
 						return (Class) m.get(form);
-					c = RT.classForName(sym.name);
+					c = RT.classForNameNonLoading(sym.name);
 //					System.out.println("maybeClass: " + form + ", " + c);
 					}
 				else
@@ -1059,7 +1059,7 @@ static public abstract class HostExpr implements Expr, MaybePrimitiveExpr{
 						if(m != null && m.containsKey(form))
 							return (Class) m.get(form);
 						try{
-						c = RT.classForName(sym.name);
+						c = RT.classForNameNonLoading(sym.name);
 //						System.out.println("maybeClass: " + form + ", " + c);
 						}
 						catch(Exception e){
